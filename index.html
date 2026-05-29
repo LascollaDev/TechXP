@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechXP | Loja de Computadores & Tecnologia</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --gold: #F5C518;
+    --gold-dark: #C49B10;
+    --gold-light: #FFD700;
+    --bg-dark: #0A0A0F;
+    --bg-card: #111118;
+    --bg-card2: #16161F;
+    --white: #FFFFFF;
+    --gray: #8888AA;
+    --gray-light: #CCCCDD;
+    --accent: #FFE066;
+    --border: rgba(245,197,24,0.18);
+    --border-hover: rgba(245,197,24,0.55);
+    --glow: 0 0 30px rgba(245,197,24,0.35);
+    --glow-strong: 0 0 60px rgba(245,197,24,0.5);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg-dark);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ──── NAVBAR ──── */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(10,10,15,0.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900; font-size: 18px;
+    color: var(--bg-dark);
+    position: relative;
+    animation: logoPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes logoPulse {
+    0%,100% { box-shadow: 0 0 20px rgba(245,197,24,0.4); }
+    50% { box-shadow: 0 0 40px rgba(245,197,24,0.8); }
+  }
+
+  .logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700; font-size: 22px;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+
+  .logo-text span { color: var(--white); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600; font-size: 15px;
+    color: var(--gray-light); text-decoration: none;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-actions {
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .nav-search {
+    display: flex; align-items: center;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 14px; gap: 8px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .nav-search:focus-within {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px rgba(245,197,24,0.2);
+  }
+
+  .nav-search input {
+    background: none; border: none; outline: none;
+    color: var(--white); font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; width: 160px;
+  }
+
+  .nav-search input::placeholder { color: var(--gray); }
+  .nav-search i { color: var(--gold); font-size: 14px; }
+
+  .btn-cart {
+    position: relative;
+    background: none; border: 2px solid var(--border);
+    color: var(--white); border-radius: 8px;
+    padding: 8px 14px; cursor: pointer;
+    font-size: 17px; transition: all 0.3s;
+  }
+
+  .btn-cart:hover {
+    border-color: var(--gold); color: var(--gold);
+    box-shadow: var(--glow);
+  }
+
+  .cart-badge {
+    position: absolute; top: -6px; right: -6px;
+    background: var(--gold); color: var(--bg-dark);
+    border-radius: 50%; width: 18px; height: 18px;
+    font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg-dark);
+    border: none; border-radius: 8px;
+    padding: 10px 22px; cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    transition: all 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    box-shadow: var(--glow-strong);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--gold);
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    padding: 10px 22px; cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700; font-size: 12px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    transition: all 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+
+  .btn-outline:hover {
+    background: var(--gold);
+    color: var(--bg-dark);
+    box-shadow: var(--glow);
+  }
+
+  /* ──── HERO ──── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 72px 5% 0;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 70% 50%, rgba(245,197,24,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(245,197,24,0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,197,24,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,197,24,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 600px;
+    animation: fadeInLeft 0.9s ease forwards;
+  }
+
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,197,24,0.1);
+    border: 1px solid var(--border);
+    border-radius: 30px; padding: 6px 16px;
+    margin-bottom: 28px;
+    font-size: 13px; color: var(--gold);
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  .hero-badge span { width: 8px; height: 8px; background: var(--gold); border-radius: 50%; animation: blink 1.5s infinite; }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .hero-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(42px, 6vw, 80px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+    letter-spacing: -1px;
+  }
+
+  .hero-title .line1 { color: var(--white); display: block; }
+  .hero-title .line2 {
+    color: var(--gold);
+    display: block;
+    text-shadow: 0 0 40px rgba(245,197,24,0.5);
+  }
+
+  .hero-sub {
+    font-size: 18px; color: var(--gray-light);
+    line-height: 1.7; margin-bottom: 40px;
+    font-weight: 400;
+    max-width: 480px;
+  }
+
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+
+  .hero-stats {
+    display: flex; gap: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-item { text-align: left; }
+
+  .stat-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px; font-weight: 900;
+    color: var(--gold);
+  }
+
+  .stat-label {
+    font-size: 13px; color: var(--gray);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-top: 2px;
+  }
+
+  .hero-visual {
+    position: absolute; right: 5%; top: 50%;
+    transform: translateY(-50%);
+    width: 45%;
+    display: flex; align-items: center; justify-content: center;
+    animation: fadeInRight 0.9s ease 0.3s both;
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateY(-50%) translateX(40px); }
+    to { opacity: 1; transform: translateY(-50%) translateX(0); }
+  }
+
+  .pc-showcase {
+    position: relative; width: 100%; max-width: 500px;
+  }
+
+  .pc-glow-ring {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 2px solid rgba(245,197,24,0.15);
+    animation: ringPulse 4s ease-in-out infinite;
+  }
+
+  .pc-glow-ring:nth-child(2) {
+    width: 500px; height: 500px;
+    border-color: rgba(245,197,24,0.08);
+    animation-delay: 1s;
+  }
+
+  @keyframes ringPulse {
+    0%,100% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%,-50%) scale(1.05); opacity: 0.5; }
+  }
+
+  .pc-image-box {
+    position: relative; z-index: 2;
+    background: linear-gradient(135deg, #16161F 0%, #1E1E2E 100%);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
+    animation: float 6s ease-in-out infinite;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 380px;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+
+  /* SVG PC Illustration */
+  .pc-svg { width: 100%; max-width: 320px; }
+
+  .rgb-bar { animation: rgbCycle 3s linear infinite; }
+  @keyframes rgbCycle {
+    0% { fill: #F5C518; }
+    25% { fill: #FF4444; }
+    50% { fill: #44AAFF; }
+    75% { fill: #44FF88; }
+    100% { fill: #F5C518; }
+  }
+
+  /* ──── TICKER ──── */
+  .ticker-wrap {
+    background: var(--gold);
+    overflow: hidden; padding: 12px 0;
+    position: relative; z-index: 10;
+  }
+
+  .ticker-track {
+    display: flex; white-space: nowrap;
+    animation: tickerScroll 30s linear infinite;
+  }
+
+  .ticker-track span {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--bg-dark); letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 0 32px;
+  }
+
+  @keyframes tickerScroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ──── SECTION COMMON ──── */
+  section { padding: 100px 5%; position: relative; }
+
+  .section-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--gold); letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .section-label::before {
+    content: ''; width: 32px; height: 2px; background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900; line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-title .gold { color: var(--gold); }
+
+  .section-sub {
+    font-size: 17px; color: var(--gray);
+    max-width: 560px; line-height: 1.7;
+    margin-bottom: 56px;
+  }
+
+  /* ──── CATEGORIES ──── */
+  #categorias { background: linear-gradient(180deg, var(--bg-dark) 0%, #0D0D14 100%); }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .cat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-decoration: none; display: block;
+    position: relative; overflow: hidden;
+  }
+
+  .cat-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0);
+    transition: transform 0.35s;
+    transform-origin: left;
+  }
+
+  .cat-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5), var(--glow);
+  }
+
+  .cat-card:hover::before { transform: scaleX(1); }
+
+  .cat-icon {
+    font-size: 36px; margin-bottom: 14px;
+    color: var(--gold);
+    filter: drop-shadow(0 0 12px rgba(245,197,24,0.5));
+    transition: transform 0.3s;
+  }
+
+  .cat-card:hover .cat-icon { transform: scale(1.15) rotate(-5deg); }
+
+  .cat-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--white); letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .cat-count { font-size: 13px; color: var(--gray); margin-top: 6px; }
+
+  /* ──── PRODUTOS ──── */
+  #produtos { background: #0D0D14; }
+
+  .filter-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .filter-tab {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--gray-light);
+    border-radius: 30px; padding: 8px 20px;
+    cursor: pointer; font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .filter-tab.active, .filter-tab:hover {
+    background: var(--gold); color: var(--bg-dark);
+    border-color: var(--gold);
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .product-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.35s ease;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .product-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 30px rgba(245,197,24,0.12);
+  }
+
+  .product-badge {
+    position: absolute; top: 16px; left: 16px; z-index: 3;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px;
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+
+  .badge-new { background: var(--gold); color: var(--bg-dark); }
+  .badge-hot { background: #FF4444; color: white; }
+  .badge-sale { background: #44AAFF; color: white; }
+
+  .product-wishlist {
+    position: absolute; top: 16px; right: 16px; z-index: 3;
+    background: rgba(10,10,15,0.7); border: none;
+    color: var(--gray); width: 34px; height: 34px;
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; transition: all 0.3s;
+  }
+
+  .product-wishlist:hover { color: #FF4444; background: rgba(255,68,68,0.1); }
+
+  .product-img-wrap {
+    background: linear-gradient(135deg, #13131A, #1A1A25);
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .product-img-wrap::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(245,197,24,0.08) 0%, transparent 70%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+
+  .product-card:hover .product-img-wrap::after { opacity: 1; }
+
+  .product-icon-display {
+    font-size: 72px; color: var(--gold);
+    filter: drop-shadow(0 0 20px rgba(245,197,24,0.4));
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .product-card:hover .product-icon-display { transform: scale(1.15) rotate(-8deg); }
+
+  .product-info { padding: 22px; }
+
+  .product-brand {
+    font-size: 11px; font-weight: 700; color: var(--gold);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .product-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--white); line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .product-specs {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .spec-tag {
+    background: rgba(245,197,24,0.08);
+    border: 1px solid rgba(245,197,24,0.2);
+    color: var(--gray-light);
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+  }
+
+  .product-rating {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .stars { color: var(--gold); font-size: 13px; }
+  .rating-count { font-size: 12px; color: var(--gray); }
+
+  .product-footer {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding-top: 16px; border-top: 1px solid var(--border);
+  }
+
+  .product-price-old { font-size: 12px; color: var(--gray); text-decoration: line-through; }
+  .product-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px; font-weight: 900; color: var(--gold);
+  }
+
+  .price-pix { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  .btn-add-cart {
+    background: var(--gold); color: var(--bg-dark);
+    border: none; border-radius: 10px;
+    padding: 10px 16px; cursor: pointer;
+    font-size: 16px; transition: all 0.3s;
+  }
+
+  .btn-add-cart:hover {
+    background: var(--gold-light);
+    box-shadow: var(--glow);
+    transform: scale(1.1);
+  }
+
+  /* ──── BANNER PROMO ──── */
+  #promo {
+    padding: 0 5%;
+    margin: 20px 0;
+  }
+
+  .promo-banner {
+    background: linear-gradient(135deg, #1A1400 0%, #0A0A0F 40%, #0A0A0F 60%, #1A1400 100%);
+    border: 1px solid var(--gold);
+    border-radius: 24px;
+    padding: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative; overflow: hidden;
+    box-shadow: var(--glow);
+  }
+
+  .promo-banner::before {
+    content: ''; position: absolute;
+    top: -100px; right: 200px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(245,197,24,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .promo-tag {
+    display: inline-block;
+    background: var(--gold); color: var(--bg-dark);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 11px; font-weight: 900;
+    padding: 5px 14px; border-radius: 20px;
+    letter-spacing: 2px; margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .promo-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900; line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .promo-sub { font-size: 16px; color: var(--gray-light); margin-bottom: 28px; }
+
+  .promo-countdown {
+    display: flex; gap: 16px; margin-bottom: 32px;
+  }
+
+  .count-block {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px;
+    text-align: center; min-width: 64px;
+  }
+
+  .count-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 28px; font-weight: 900; color: var(--gold);
+    line-height: 1;
+  }
+
+  .count-label { font-size: 11px; color: var(--gray); letter-spacing: 1px; margin-top: 4px; }
+
+  .promo-big-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(60px, 10vw, 120px);
+    font-weight: 900; color: var(--gold);
+    opacity: 0.12;
+    position: absolute; right: 60px; bottom: -20px;
+    letter-spacing: -5px;
+  }
+
+  /* ──── MARCAS ──── */
+  #marcas { background: var(--bg-dark); padding: 60px 5%; }
+
+  .brands-label {
+    text-align: center; font-size: 13px; color: var(--gray);
+    letter-spacing: 3px; text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif; margin-bottom: 36px;
+  }
+
+  .brands-track {
+    display: flex; align-items: center; justify-content: space-around;
+    flex-wrap: wrap; gap: 32px;
+  }
+
+  .brand-logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px; font-weight: 900;
+    color: var(--gray);
+    letter-spacing: 2px; text-transform: uppercase;
+    transition: all 0.3s; cursor: pointer;
+    filter: brightness(0.5);
+  }
+
+  .brand-logo:hover { color: var(--gold); filter: brightness(1); }
+
+  /* ──── SERVIÇOS ──── */
+  #servicos { background: #0D0D14; }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 36px;
+    transition: all 0.35s ease;
+    position: relative; overflow: hidden;
+  }
+
+  .service-card::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .service-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4), var(--glow);
+  }
+
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon {
+    width: 56px; height: 56px;
+    background: rgba(245,197,24,0.1);
+    border: 1px solid rgba(245,197,24,0.25);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; color: var(--gold);
+    margin-bottom: 22px;
+    transition: all 0.3s;
+  }
+
+  .service-card:hover .service-icon {
+    background: var(--gold); color: var(--bg-dark);
+    box-shadow: var(--glow);
+  }
+
+  .service-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px; font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .service-desc { font-size: 15px; color: var(--gray); line-height: 1.7; }
+
+  /* ──── DEPOIMENTOS ──── */
+  #depoimentos { background: var(--bg-dark); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px;
+    transition: all 0.3s;
+  }
+
+  .testimonial-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+  }
+
+  .testi-stars { color: var(--gold); font-size: 14px; margin-bottom: 16px; }
+
+  .testi-text {
+    font-size: 16px; color: var(--gray-light);
+    line-height: 1.7; margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .testi-author {
+    display: flex; align-items: center; gap: 14px;
+    padding-top: 20px; border-top: 1px solid var(--border);
+  }
+
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900; font-size: 16px; color: var(--bg-dark);
+  }
+
+  .testi-name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px; font-weight: 700;
+  }
+
+  .testi-role { font-size: 12px; color: var(--gray); margin-top: 2px; }
+
+  /* ──── POR QUÊ NÓS ──── */
+  #porquenos { background: #0D0D14; }
+
+  .reasons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 40px;
+  }
+
+  .reason-item {
+    display: flex; gap: 18px; align-items: flex-start;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    transition: all 0.3s;
+  }
+
+  .reason-item:hover { border-color: var(--border-hover); }
+
+  .reason-num {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px; font-weight: 900; color: var(--gold);
+    opacity: 0.4; line-height: 1; min-width: 40px;
+  }
+
+  .reason-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px; font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .reason-desc { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+  /* ──── NEWSLETTER ──── */
+  #newsletter {
+    padding: 80px 5%;
+    background: linear-gradient(135deg, #0D0A00, #0A0A0F, #0A0A0F, #0D0A00);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .newsletter-wrap {
+    max-width: 600px; margin: 0 auto; text-align: center;
+  }
+
+  .newsletter-wrap .section-label { justify-content: center; }
+
+  .newsletter-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900; margin-bottom: 16px;
+  }
+
+  .newsletter-sub { font-size: 16px; color: var(--gray); margin-bottom: 36px; }
+
+  .newsletter-form {
+    display: flex; gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px; padding: 6px 6px 6px 20px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .newsletter-form:focus-within {
+    border-color: var(--gold);
+    box-shadow: var(--glow);
+  }
+
+  .newsletter-form input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--white); font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+  }
+
+  .newsletter-form input::placeholder { color: var(--gray); }
+
+  /* ──── FOOTER ──── */
+  footer {
+    background: #050508;
+    border-top: 1px solid var(--border);
+    padding: 70px 5% 30px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 48px; margin-bottom: 56px;
+  }
+
+  .footer-brand .logo-text { font-size: 20px; }
+
+  .footer-desc {
+    font-size: 15px; color: var(--gray); line-height: 1.7;
+    margin: 20px 0 28px;
+  }
+
+  .footer-social {
+    display: flex; gap: 12px;
+  }
+
+  .social-btn {
+    width: 38px; height: 38px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gray); font-size: 15px;
+    cursor: pointer; transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .social-btn:hover {
+    border-color: var(--gold); color: var(--gold);
+    box-shadow: var(--glow);
+    transform: translateY(-3px);
+  }
+
+  .footer-heading {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--white); letter-spacing: 1.5px;
+    text-transform: uppercase; margin-bottom: 22px;
+  }
+
+  .footer-links { list-style: none; }
+
+  .footer-links li { margin-bottom: 12px; }
+
+  .footer-links a {
+    color: var(--gray); font-size: 15px;
+    text-decoration: none; transition: color 0.3s;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .footer-links a::before {
+    content: '›'; color: var(--gold); font-size: 18px;
+    opacity: 0; transform: translateX(-8px);
+    transition: all 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+  .footer-links a:hover::before { opacity: 1; transform: translateX(0); }
+
+  .footer-contact-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    margin-bottom: 16px; font-size: 15px;
+  }
+
+  .footer-contact-item i {
+    color: var(--gold); font-size: 16px; margin-top: 2px; min-width: 18px;
+  }
+
+  .footer-contact-item span { color: var(--gray); line-height: 1.5; }
+
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 28px; border-top: 1px solid var(--border);
+    flex-wrap: wrap; gap: 16px;
+  }
+
+  .footer-copy { font-size: 14px; color: var(--gray); }
+  .footer-copy span { color: var(--gold); }
+
+  .footer-pay {
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  .pay-icon {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 6px; padding: 4px 10px;
+    font-size: 12px; font-weight: 700; color: var(--gray-light);
+  }
+
+  /* ──── FLOATING ACTIONS ──── */
+  .float-actions {
+    position: fixed; right: 24px; bottom: 24px; z-index: 999;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .float-btn {
+    width: 52px; height: 52px;
+    border-radius: 14px; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; transition: all 0.3s;
+    text-decoration: none;
+  }
+
+  .float-whatsapp {
+    background: #25D366; color: white;
+    box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+    animation: floatBounce 3s ease-in-out infinite;
+  }
+
+  .float-whatsapp:hover { transform: scale(1.12); box-shadow: 0 12px 32px rgba(37,211,102,0.6); }
+
+  .float-top {
+    background: var(--bg-card); border: 1px solid var(--border);
+    color: var(--gold);
+  }
+
+  .float-top:hover { background: var(--gold); color: var(--bg-dark); box-shadow: var(--glow); }
+
+  @keyframes floatBounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ──── ANNOUNCEMENT BAR ──── */
+  .announcement-bar {
+    background: var(--gold); padding: 10px 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 8px;
+  }
+
+  .ann-text {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: var(--bg-dark); letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .ann-link { color: var(--bg-dark); font-weight: 900; text-decoration: underline; }
+
+  .ann-close {
+    background: none; border: none; cursor: pointer;
+    color: var(--bg-dark); font-size: 16px;
+  }
+
+  /* ──── RESPONSIVE ──── */
+  @media (max-width: 1024px) {
+    .hero-visual { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .reasons-grid { grid-template-columns: 1fr; }
+    .promo-big-num { display: none; }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .nav-search { display: none; }
+    section { padding: 70px 4%; }
+    .hero-stats { gap: 24px; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .promo-banner { padding: 36px 24px; }
+    .promo-countdown { flex-wrap: wrap; }
+    .footer-bottom { flex-direction: column; align-items: center; }
+  }
+
+  /* ──── ANIMATIONS ──── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  .stagger-1 { transition-delay: 0.1s; }
+  .stagger-2 { transition-delay: 0.2s; }
+  .stagger-3 { transition-delay: 0.3s; }
+  .stagger-4 { transition-delay: 0.4s; }
+  .stagger-5 { transition-delay: 0.5s; }
+
+  /* Cart notification */
+  .cart-notif {
+    position: fixed; top: 90px; right: 24px; z-index: 2000;
+    background: var(--gold); color: var(--bg-dark);
+    border-radius: 12px; padding: 14px 20px;
+    font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+    transform: translateX(200%); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--glow-strong);
+  }
+
+  .cart-notif.show { transform: translateX(0); }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement-bar" id="annBar">
+  <div class="ann-text">🔥 FRETE GRÁTIS acima de R$299 | Parcele em até 12x sem juros | <a href="#produtos" class="ann-link">Ver ofertas</a></div>
+  <button class="ann-close" onclick="document.getElementById('annBar').style.display='none'">✕</button>
+</div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <div class="logo-icon">X</div>
+    <span class="logo-text">TECH<span>XP</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#categorias">Categorias</a></li>
+    <li><a href="#produtos">Produtos</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#depoimentos">Reviews</a></li>
+    <li><a href="#footer">Contato</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-search">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Buscar produtos...">
+    </div>
+    <button class="btn-cart" onclick="openCart()" title="Carrinho">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+    <a href="#newsletter" class="btn-primary">Ofertas</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span></span> Tecnologia de ponta ao seu alcance
+    </div>
+    <h1 class="hero-title">
+      <span class="line1">O FUTURO DA</span>
+      <span class="line2">TECNOLOGIA</span>
+      <span class="line1" style="font-size: 0.55em; color: var(--gray-light);">está aqui.</span>
+    </h1>
+    <p class="hero-sub">
+      PCs gamer, notebooks profissionais, componentes e periféricos das melhores marcas do mundo. Monte sua máquina dos sonhos com a TechXP.
+    </p>
+    <div class="hero-btns">
+      <a href="#produtos" class="btn-primary">Explorar Produtos</a>
+      <a href="#servicos" class="btn-outline">Monte seu PC</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">+8k</div>
+        <div class="stat-label">Produtos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">+45k</div>
+        <div class="stat-label">Clientes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4.9★</div>
+        <div class="stat-label">Avaliação</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Suporte</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Visual -->
+  <div class="hero-visual">
+    <div class="pc-showcase">
+      <div class="pc-glow-ring"></div>
+      <div class="pc-glow-ring" style="width:550px;height:550px"></div>
+      <div class="pc-image-box">
+        <!-- SVG PC Gaming Illustration -->
+        <svg class="pc-svg" viewBox="0 0 320 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- PC Case -->
+          <rect x="60" y="30" width="140" height="200" rx="10" fill="#1A1A25" stroke="#F5C518" stroke-width="1.5"/>
+          <!-- Case Inner Shadow -->
+          <rect x="68" y="38" width="124" height="184" rx="6" fill="#111118"/>
+          <!-- Mesh Pattern -->
+          <rect x="68" y="38" width="124" height="60" rx="6" fill="#151520"/>
+          <!-- RGB Strip Top -->
+          <rect x="68" y="38" width="124" height="4" rx="2" class="rgb-bar"/>
+          <!-- Power Button -->
+          <circle cx="130" cy="62" r="8" fill="#1A1A25" stroke="#F5C518" stroke-width="1.5"/>
+          <circle cx="130" cy="62" r="4" fill="#F5C518"/>
+          <!-- Drive Slots -->
+          <rect x="80" y="80" width="60" height="8" rx="2" fill="#0A0A0F"/>
+          <rect x="80" y="94" width="60" height="8" rx="2" fill="#0A0A0F"/>
+          <!-- Window Panel -->
+          <rect x="80" y="114" width="100" height="94" rx="6" fill="#0D0D18" stroke="#F5C518" stroke-opacity="0.3" stroke-width="1"/>
+          <!-- GPU Inside -->
+          <rect x="86" y="140" width="88" height="28" rx="4" fill="#1E1E2E"/>
+          <rect x="86" y="140" width="20" height="28" rx="2" fill="#F5C518" fill-opacity="0.15"/>
+          <circle cx="100" cy="154" r="8" fill="#F5C518" fill-opacity="0.5"/>
+          <circle cx="116" cy="154" r="8" fill="#F5C518" fill-opacity="0.3"/>
+          <!-- Fans -->
+          <circle cx="130" cy="130" r="12" fill="#151520" stroke="#F5C518" stroke-opacity="0.4" stroke-width="1"/>
+          <path d="M130 120 L134 128 L130 126 L126 128Z" fill="#F5C518" fill-opacity="0.6"/>
+          <path d="M140 130 L132 134 L134 130 L132 126Z" fill="#F5C518" fill-opacity="0.6"/>
+          <path d="M130 140 L126 132 L130 134 L134 132Z" fill="#F5C518" fill-opacity="0.6"/>
+          <path d="M120 130 L128 126 L126 130 L128 134Z" fill="#F5C518" fill-opacity="0.6"/>
+          <!-- RGB Bottom strip -->
+          <rect x="68" y="218" width="124" height="4" rx="2" fill="#44AAFF" opacity="0.8"/>
+          <!-- Front ports -->
+          <rect x="84" y="174" width="10" height="6" rx="1" fill="#F5C518" fill-opacity="0.5"/>
+          <rect x="100" y="174" width="10" height="6" rx="1" fill="#333"/>
+
+          <!-- Monitor -->
+          <rect x="220" y="40" width="80" height="55" rx="6" fill="#111118" stroke="#F5C518" stroke-opacity="0.5" stroke-width="1.5"/>
+          <rect x="224" y="44" width="72" height="43" rx="3" fill="#0D0D18"/>
+          <!-- Monitor screen content -->
+          <rect x="228" y="48" width="64" height="6" rx="1" fill="#F5C518" fill-opacity="0.3"/>
+          <rect x="228" y="57" width="40" height="4" rx="1" fill="#F5C518" fill-opacity="0.15"/>
+          <rect x="228" y="64" width="52" height="4" rx="1" fill="#F5C518" fill-opacity="0.1"/>
+          <rect x="228" y="71" width="30" height="4" rx="1" fill="#F5C518" fill-opacity="0.2"/>
+          <!-- Monitor stand -->
+          <rect x="253" y="95" width="14" height="14" rx="1" fill="#1A1A25"/>
+          <rect x="244" y="109" width="32" height="4" rx="2" fill="#1A1A25" stroke="#F5C518" stroke-opacity="0.3" stroke-width="1"/>
+
+          <!-- Keyboard -->
+          <rect x="210" y="125" width="100" height="36" rx="4" fill="#111118" stroke="#F5C518" stroke-opacity="0.3" stroke-width="1"/>
+          <!-- Keys rows -->
+          <rect x="214" y="129" width="92" height="7" rx="1" fill="#1A1A25"/>
+          <rect x="214" y="138" width="92" height="7" rx="1" fill="#1A1A25"/>
+          <rect x="214" y="147" width="70" height="7" rx="1" fill="#1A1A25"/>
+          <!-- Space bar -->
+          <rect x="230" y="147" width="40" height="7" rx="1" fill="#F5C518" fill-opacity="0.2"/>
+          <!-- WASD highlight -->
+          <rect x="226" y="138" width="7" height="7" rx="1" fill="#F5C518" fill-opacity="0.4"/>
+          <rect x="235" y="147" width="7" height="7" rx="1" fill="#F5C518" fill-opacity="0.4"/>
+          <rect x="244" y="138" width="7" height="7" rx="1" fill="#F5C518" fill-opacity="0.4"/>
+          <rect x="253" y="138" width="7" height="7" rx="1" fill="#F5C518" fill-opacity="0.4"/>
+
+          <!-- Mouse -->
+          <rect x="220" y="128" width="20" height="28" rx="6" fill="#111118" stroke="#F5C518" stroke-opacity="0.4" stroke-width="1"/>
+          <line x1="230" y1="128" x2="230" y2="142" stroke="#F5C518" stroke-opacity="0.3" stroke-width="1"/>
+          <rect x="222" y="130" width="6" height="8" rx="1" fill="#F5C518" fill-opacity="0.3"/>
+
+          <!-- Decorative circuit lines -->
+          <path d="M60 130 L40 130 L40 160 L20 160" stroke="#F5C518" stroke-opacity="0.2" stroke-width="1" stroke-dasharray="4 4"/>
+          <circle cx="20" cy="160" r="4" fill="#F5C518" fill-opacity="0.3"/>
+          <path d="M200 80 L240 80" stroke="#F5C518" stroke-opacity="0.15" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span>⚡ ENTREGA RÁPIDA</span>
+    <span>🖥️ PCs GAMER</span>
+    <span>💾 COMPONENTES TOP</span>
+    <span>🎧 PERIFÉRICOS PREMIUM</span>
+    <span>🔧 MONTAGEM INCLUSA</span>
+    <span>✅ GARANTIA ESTENDIDA</span>
+    <span>💳 12X SEM JUROS</span>
+    <span>🚀 SUPORTE 24H</span>
+    <span>⚡ ENTREGA RÁPIDA</span>
+    <span>🖥️ PCs GAMER</span>
+    <span>💾 COMPONENTES TOP</span>
+    <span>🎧 PERIFÉRICOS PREMIUM</span>
+    <span>🔧 MONTAGEM INCLUSA</span>
+    <span>✅ GARANTIA ESTENDIDA</span>
+    <span>💳 12X SEM JUROS</span>
+    <span>🚀 SUPORTE 24H</span>
+  </div>
+</div>
+
+<!-- CATEGORIAS -->
+<section id="categorias">
+  <div class="section-label">Navegue por</div>
+  <h2 class="section-title">Nossas <span class="gold">Categorias</span></h2>
+  <p class="section-sub">Encontre tudo que você precisa para montar, atualizar ou customizar seu setup.</p>
+
+  <div class="cat-grid">
+    <a href="#produtos" class="cat-card fade-up stagger-1">
+      <div class="cat-icon"><i class="fas fa-desktop"></i></div>
+      <div class="cat-name">PCs Gamer</div>
+      <div class="cat-count">124 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-2">
+      <div class="cat-icon"><i class="fas fa-laptop"></i></div>
+      <div class="cat-name">Notebooks</div>
+      <div class="cat-count">89 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-3">
+      <div class="cat-icon"><i class="fas fa-microchip"></i></div>
+      <div class="cat-name">Processadores</div>
+      <div class="cat-count">56 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-4">
+      <div class="cat-icon"><i class="fas fa-memory"></i></div>
+      <div class="cat-name">Memórias RAM</div>
+      <div class="cat-count">73 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-5">
+      <div class="cat-icon"><i class="fas fa-tv"></i></div>
+      <div class="cat-name">Monitores</div>
+      <div class="cat-count">48 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-1">
+      <div class="cat-icon"><i class="fas fa-keyboard"></i></div>
+      <div class="cat-name">Teclados</div>
+      <div class="cat-count">92 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-2">
+      <div class="cat-icon"><i class="fas fa-headphones"></i></div>
+      <div class="cat-name">Headsets</div>
+      <div class="cat-count">65 produtos</div>
+    </a>
+    <a href="#produtos" class="cat-card fade-up stagger-3">
+      <div class="cat-icon"><i class="fas fa-hdd"></i></div>
+      <div class="cat-name">SSDs & HDs</div>
+      <div class="cat-count">110 produtos</div>
+    </a>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section id="produtos">
+  <div class="section-label">Mais vendidos</div>
+  <h2 class="section-title">Produtos em <span class="gold">Destaque</span></h2>
+  <p class="section-sub">Os produtos mais procurados pelos nossos clientes, com os melhores preços e condições.</p>
+
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="filterProducts(this, 'todos')">Todos</button>
+    <button class="filter-tab" onclick="filterProducts(this, 'pc')">PCs Gamer</button>
+    <button class="filter-tab" onclick="filterProducts(this, 'notebook')">Notebooks</button>
+    <button class="filter-tab" onclick="filterProducts(this, 'periferico')">Periféricos</button>
+    <button class="filter-tab" onclick="filterProducts(this, 'componente')">Componentes</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid">
+
+    <div class="product-card fade-up" data-cat="pc">
+      <span class="product-badge badge-hot">🔥 Hot</span>
+      <button class="product-wishlist" onclick="toggleWish(this)"><i class="far fa-heart"></i></button>
+      <div class="product-img-wrap">
+        <div class="product-icon-display">🖥️</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">TechXP Custom</div>
+        <div class="product-name">PC Gamer Titan RTX 4070 Ti + Ryzen 9</div>
+        <div class="product-specs">
+          <span class="spec-tag">RTX 4070 Ti</span>
+          <span class="spec-tag">Ryzen 9 7900X</span>
+          <span class="spec-tag">32GB DDR5</span>
+          <span class="spec-tag">1TB NVMe</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count">(247 avaliações)</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price-old">R$ 12.499</div>
+            <div class="product-price">R$ 9.999</div>
+            <div class="price-pix">ou 12x de R$ 833,25</div>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart(this)" title="Adicionar ao carrinho">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card fade-up stagger-1" data-cat="notebook">
+      <span class="product-badge badge-new">✨ Novo</span>
+      <button class="product-wishlist" onclick="toggleWish(this)"><i class="far fa-heart"></i></button>
+      <div class="product-img-wrap">
+        <div class="product-icon-display">💻</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">ASUS ROG</div>
+        <div class="product-name">ROG Strix G16 RTX 4060 144Hz</div>
+        <div class="product-specs">
+          <span class="spec-tag">RTX 4060</span>
+          <span class="spec-tag">i7-13650HX</span>
+          <span class="spec-tag">16GB RAM</span>
+          <span class="spec-tag">144Hz</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count">(183 avaliações)</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price-old">R$ 8.999</div>
+            <div class="product-price">R$ 7.299</div>
+            <div class="price-pix">ou 12x de R$ 608,25</div>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart(this)" title="Adicionar ao carrinho">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card fade-up stagger-2" data-cat="periferico">
+      <span class="product-badge badge-sale">💙 Oferta</span>
+      <button class="product-wishlist" onclick="toggleWish(this)"><i class="far fa-heart"></i></button>
+      <div class="product-img-wrap">
+        <div class="product-icon-display">⌨️</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">HyperX</div>
+        <div class="product-name">Teclado Mecânico HyperX Alloy Origins RGB</div>
+        <div class="product-specs">
+          <span class="spec-tag">Switch Red</span>
+          <span class="spec-tag">RGB Full</span>
+          <span class="spec-tag">Anti-Ghosting</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">★★★★☆</span>
+          <span class="rating-count">(312 avaliações)</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price-old">R$ 649</div>
+            <div class="product-price">R$ 489</div>
+            <div class="price-pix">ou 6x de R$ 81,50</div>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart(this)" title="Adicionar ao carrinho">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card fade-up stagger-3" data-cat="componente">
+      <span class="product-badge badge-new">✨ Novo</span>
+      <button class="product-wishlist" onclick="toggleWish(this)"><i class="far fa-heart"></i></button>
+      <div class="product-img-wrap">
+        <div class="product-icon-display">🎮</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">NVIDIA</div>
+        <div class="product-name">GeForce RTX 4080 Super 16GB GDDR6X</div>
+        <div class="product-specs">
+          <span class="spec-tag">16GB VRAM</span>
+          <span class="spec-tag">4K Gaming</span>
+          <span class="spec-tag">DLSS 3</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count">(98 avaliações)</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price-old">R$ 6.499</div>
+            <div class="product-price">R$ 5.799</div>
+            <div class="price-pix">ou 12x de R$ 483,25</div>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart(this)" title="Adicionar ao carrinho">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card fade-up stagger-4" data-cat="periferico">
+      <button class="product-wishlist" onclick="toggleWish(this)"><i class="far fa-heart"></i></button>
+      <div class="product-img-wrap">
+        <div class="product-icon-display">🎧</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Logitech</div>
+        <div class="product-name">Headset G Pro X Wireless Gaming</div>
+        <div class="product-specs">
+          <span class="spec-tag">Wireless</span>
+          <span class="spec-tag">Surround 7.1</span>
+          <span class="spec-tag">30h Bateria</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count">(421 avaliações)</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price-old">R$ 1.299</div>
+            <div class="product-price">R$ 999</div>
+            <div class="price-pix">ou 10x de R$ 99,90</div>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart(this)" title="Adicionar ao carrinho">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card fade-up stagger-5" data-cat="pc">
+      <span class="product-badge badge-hot">🔥 Hot</span>
+      <button class="product-wishlist" onclick="toggleWish(this)"><i class="far fa-heart"></i></button>
+      <div class="product-img-wrap">
+        <div class="product-icon-display">🖥️</div>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">TechXP Custom</div>
+        <div class="product-name">PC Workstation Intel i9 + RTX 4090</div>
+        <div class="product-specs">
+          <span class="spec-tag">RTX 4090</span>
+          <span class="spec-tag">Intel i9-14900K</span>
+          <span class="spec-tag">64GB DDR5</span>
+          <span class="spec-tag">2TB NVMe</span>
+        </div>
+        <div class="product-rating">
+          <span class="stars">★★★★★</span>
+          <span class="rating-count">(67 avaliações)</span>
+        </div>
+        <div class="product-footer">
+          <div>
+            <div class="product-price-old">R$ 24.999</div>
+            <div class="product-price">R$ 21.999</div>
+            <div class="price-pix">ou 12x de R$ 1.833</div>
+          </div>
+          <button class="btn-add-cart" onclick="addToCart(this)" title="Adicionar ao carrinho">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:48px">
+    <a href="#" class="btn-outline">Ver Todos os Produtos</a>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div id="promo">
+  <div class="promo-banner">
+    <div style="position:relative;z-index:2">
+      <div class="promo-tag">⚡ Oferta Relâmpago</div>
+      <h2 class="promo-title">Monitor Gamer<br><span style="color:var(--gold)">240Hz + 2K</span></h2>
+      <p class="promo-sub">LG UltraGear 27" QHD — Tecnologia IPS, G-Sync, HDR600</p>
+
+      <div class="promo-countdown" id="countdown">
+        <div class="count-block">
+          <div class="count-num" id="cHours">08</div>
+          <div class="count-label">Horas</div>
+        </div>
+        <div class="count-block">
+          <div class="count-num" id="cMins">34</div>
+          <div class="count-label">Minutos</div>
+        </div>
+        <div class="count-block">
+          <div class="count-num" id="cSecs">22</div>
+          <div class="count-label">Segundos</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:14px;color:var(--gray);text-decoration:line-through">R$ 3.299</div>
+          <div style="font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;color:var(--gold)">R$ 2.199</div>
+          <div style="font-size:13px;color:var(--gray)">12x de R$ 183,25 sem juros</div>
+        </div>
+        <button class="btn-primary" style="font-size:14px;padding:14px 32px" onclick="addToCart(this)">
+          Comprar Agora →
+        </button>
+      </div>
+    </div>
+
+    <div class="promo-big-num">-33%</div>
+  </div>
+</div>
+
+<!-- MARCAS -->
+<section id="marcas">
+  <div class="brands-label">Parceiros & Marcas oficiais</div>
+  <div class="brands-track">
+    <div class="brand-logo">NVIDIA</div>
+    <div class="brand-logo">AMD</div>
+    <div class="brand-logo">INTEL</div>
+    <div class="brand-logo">ASUS ROG</div>
+    <div class="brand-logo">CORSAIR</div>
+    <div class="brand-logo">LOGITECH</div>
+    <div class="brand-logo">SAMSUNG</div>
+    <div class="brand-logo">HYPERX</div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="section-label">O que fazemos</div>
+  <h2 class="section-title">Nossos <span class="gold">Serviços</span></h2>
+  <p class="section-sub">Além de vender tecnologia, oferecemos serviços completos para você tirar o máximo da sua máquina.</p>
+
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon"><i class="fas fa-tools"></i></div>
+      <h3 class="service-title">Montagem de PCs</h3>
+      <p class="service-desc">Monte seu PC personalizado com nossos técnicos especializados. Escolha os componentes e nós cuidamos de tudo — sem estresse, com garantia.</p>
+    </div>
+    <div class="service-card fade-up stagger-1">
+      <div class="service-icon"><i class="fas fa-wrench"></i></div>
+      <h3 class="service-title">Manutenção & Reparo</h3>
+      <p class="service-desc">Troca de pasta térmica, limpeza, substituição de componentes danificados, diagnóstico completo. Devolvemos sua máquina como nova.</p>
+    </div>
+    <div class="service-card fade-up stagger-2">
+      <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+      <h3 class="service-title">Customização RGB</h3>
+      <p class="service-desc">Watercooling custom, iluminação RGB personalizada, cabos sleevados, mods de gabinete. Transforme seu setup num verdadeiro espetáculo.</p>
+    </div>
+    <div class="service-card fade-up stagger-3">
+      <div class="service-icon"><i class="fas fa-headset"></i></div>
+      <h3 class="service-title">Suporte 24/7</h3>
+      <p class="service-desc">Dúvidas sobre configuração, drivers, performance ou compatibilidade? Nossa equipe técnica está disponível qualquer hora para te ajudar.</p>
+    </div>
+    <div class="service-card fade-up stagger-4">
+      <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+      <h3 class="service-title">Garantia Estendida</h3>
+      <p class="service-desc">Planos de garantia estendida de até 3 anos, cobertura completa contra defeitos de fabricação e assistência técnica autorizada das marcas.</p>
+    </div>
+    <div class="service-card fade-up stagger-5">
+      <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
+      <h3 class="service-title">Consultoria Gratuita</h3>
+      <p class="service-desc">Não sabe por onde começar? Nossos especialistas montam a configuração ideal para o seu orçamento e necessidade, sem custo adicional.</p>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE NÓS -->
+<section id="porquenos" style="background:var(--bg-dark)">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center">
+    <div>
+      <div class="section-label">Por que a TechXP?</div>
+      <h2 class="section-title">Mais que uma loja,<br>somos seu <span class="gold">parceiro tech</span></h2>
+      <p class="section-sub">Desde 2015 transformando a experiência de compra de tecnologia no Brasil com qualidade, honestidade e paixão por games.</p>
+      <a href="#newsletter" class="btn-primary">Quero ser cliente →</a>
+    </div>
+    <div class="reasons-grid">
+      <div class="reason-item fade-up">
+        <div class="reason-num">01</div>
+        <div>
+          <div class="reason-title">Preços Competitivos</div>
+          <div class="reason-desc">Monitoramos o mercado diariamente para garantir que você sempre pague o melhor preço.</div>
+        </div>
+      </div>
+      <div class="reason-item fade-up stagger-1">
+        <div class="reason-num">02</div>
+        <div>
+          <div class="reason-title">Produtos Originais</div>
+          <div class="reason-desc">100% de produtos autênticos com nota fiscal, garantia de fábrica e procedência certificada.</div>
+        </div>
+      </div>
+      <div class="reason-item fade-up stagger-2">
+        <div class="reason-num">03</div>
+        <div>
+          <div class="reason-title">Entrega Expressa</div>
+          <div class="reason-desc">Envio em até 24h para todo Brasil. Rastreamento em tempo real do pedido.</div>
+        </div>
+      </div>
+      <div class="reason-item fade-up stagger-3">
+        <div class="reason-num">04</div>
+        <div>
+          <div class="reason-title">Trocas Sem Burocracia</div>
+          <div class="reason-desc">30 dias para troca garantidos. Processo simples, sem letras miúdas ou complicações.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="section-label">O que dizem</div>
+  <h2 class="section-title">Clientes que <span class="gold">aprovam</span></h2>
+  <p class="section-sub">Mais de 45 mil clientes satisfeitos em todo Brasil. Veja o que eles falam sobre a TechXP.</p>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card fade-up">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Comprei meu PC gamer montado pela TechXP e ficou perfeito! Entrega rápida, embalagem segura e o equipamento exatamente como combinado. Melhor loja de TI que já comprei!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">RF</div>
+        <div>
+          <div class="testi-name">Rafael Ferreira</div>
+          <div class="testi-role">Streamer — Belo Horizonte, MG</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up stagger-1">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"A consultoria gratuita foi essencial. Não entendia nada de hardware e o time me ajudou a montar a configuração perfeita dentro do meu orçamento. Setup incrível!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar">MC</div>
+        <div>
+          <div class="testi-name">Marina Costa</div>
+          <div class="testi-role">Designer Gráfica — São Paulo, SP</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card fade-up stagger-2">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Atendimento impecável! Tive um probleminha com minha GPU e resolveram em menos de 48h sem burocracia. Suporte técnico de verdade. Já indiquei para todo mundo."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">LO</div>
+        <div>
+          <div class="testi-name">Lucas Oliveira</div>
+          <div class="testi-role">Desenvolvedor — Curitiba, PR</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section id="newsletter">
+  <div class="newsletter-wrap">
+    <div class="section-label" style="justify-content:center">Fique por dentro</div>
+    <h2 class="newsletter-title">Receba as <span style="color:var(--gold)">melhores ofertas</span> em primeira mão</h2>
+    <p class="newsletter-sub">Cadastre seu e-mail e ganhe 10% OFF na primeira compra + acesso exclusivo às promoções relâmpago.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="seu@email.com" id="emailInput">
+      <button class="btn-primary" onclick="subscribeEmail()">Quero desconto</button>
+    </div>
+    <p style="font-size:12px;color:var(--gray);margin-top:12px">
+      Sem spam. Cancele quando quiser. Seus dados são protegidos.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo" style="margin-bottom:0">
+        <div class="logo-icon" style="width:40px;height:40px;font-size:16px">X</div>
+        <span class="logo-text" style="font-size:20px">TECH<span>XP</span></span>
+      </div>
+      <p class="footer-desc">Desde 2015 levando a melhor tecnologia para gamers, criadores e profissionais em todo o Brasil. Qualidade, honestidade e paixão por tecnologia.</p>
+      <div class="footer-social">
+        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-tiktok"></i></a>
+        <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-heading">Produtos</div>
+      <ul class="footer-links">
+        <li><a href="#">PCs Gamer</a></li>
+        <li><a href="#">Notebooks</a></li>
+        <li><a href="#">Monitores</a></li>
+        <li><a href="#">Periféricos</a></li>
+        <li><a href="#">Componentes</a></li>
+        <li><a href="#">Cadeiras Gamer</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-heading">Empresa</div>
+      <ul class="footer-links">
+        <li><a href="#">Sobre nós</a></li>
+        <li><a href="#">Blog Tech</a></li>
+        <li><a href="#">Trabalhe conosco</a></li>
+        <li><a href="#">Política de troca</a></li>
+        <li><a href="#">Privacidade</a></li>
+        <li><a href="#">Afiliados</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-heading">Contato</div>
+      <div class="footer-contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>Av. Tecnologia, 1204 — Centro, São Paulo/SP</span>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-phone"></i>
+        <span>(11) 9 9999-0000</span>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-envelope"></i>
+        <span>contato@techxp.com.br</span>
+      </div>
+      <div class="footer-contact-item">
+        <i class="fas fa-clock"></i>
+        <span>Seg–Sex: 9h–18h<br>Sáb: 9h–13h</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2024 <span>TechXP</span>. Todos os direitos reservados. CNPJ: 00.000.000/0001-00</div>
+    <div class="footer-pay">
+      <span class="pay-icon">PIX</span>
+      <span class="pay-icon">VISA</span>
+      <span class="pay-icon">MASTER</span>
+      <span class="pay-icon">BOLETO</span>
+      <span class="pay-icon">ELO</span>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING ACTIONS -->
+<div class="float-actions">
+  <a href="https://wa.me/5511999990000" class="float-btn float-whatsapp" target="_blank" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  <button class="float-btn float-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+</div>
+
+<!-- CART NOTIFICATION -->
+<div class="cart-notif" id="cartNotif">
+  <i class="fas fa-check-circle"></i> Produto adicionado!
+</div>
+
+<script>
+  // ── Countdown Timer ──
+  function startCountdown() {
+    let total = 8*3600 + 34*60 + 22;
+    const h = document.getElementById('cHours');
+    const m = document.getElementById('cMins');
+    const s = document.getElementById('cSecs');
+    setInterval(() => {
+      if (total <= 0) { total = 12*3600; return; }
+      total--;
+      h.textContent = String(Math.floor(total/3600)).padStart(2,'0');
+      m.textContent = String(Math.floor((total%3600)/60)).padStart(2,'0');
+      s.textContent = String(total%60).padStart(2,'0');
+    }, 1000);
+  }
+  startCountdown();
+
+  // ── Cart ──
+  let cartCount = 0;
+
+  function addToCart(btn) {
+    cartCount++;
+    document.getElementById('cartBadge').textContent = cartCount;
+    const notif = document.getElementById('cartNotif');
+    notif.classList.add('show');
+    btn.style.transform = 'scale(0.85)';
+    setTimeout(() => { btn.style.transform = ''; }, 200);
+    setTimeout(() => { notif.classList.remove('show'); }, 2500);
+  }
+
+  function openCart() {
+    alert(`Carrinho: ${cartCount} item(s)\n\nFuncionalidade de carrinho completa disponível na versão publicada!`);
+  }
+
+  // ── Wishlist ──
+  function toggleWish(btn) {
+    const icon = btn.querySelector('i');
+    icon.classList.toggle('far');
+    icon.classList.toggle('fas');
+    btn.style.color = icon.classList.contains('fas') ? '#FF4444' : '';
+  }
+
+  // ── Filter Products ──
+  function filterProducts(tab, cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      if (cat === 'todos' || card.dataset.cat === cat) {
+        card.style.display = '';
+        card.style.opacity = '0';
+        setTimeout(() => card.style.opacity = '1', 10);
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  // ── Newsletter ──
+  function subscribeEmail() {
+    const email = document.getElementById('emailInput').value;
+    if (!email || !email.includes('@')) {
+      alert('Digite um e-mail válido!');
+      return;
+    }
+    alert(`✅ Cadastro realizado!\n\nSeu cupom de 10% OFF foi enviado para:\n${email}\n\nFique de olho na caixa de entrada!`);
+    document.getElementById('emailInput').value = '';
+  }
+
+  // ── Scroll Animations ──
+  const fadeEls = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ── Active nav on scroll ──
+  const sections = document.querySelectorAll('section[id], div[id="promo"]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>
